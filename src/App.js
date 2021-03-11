@@ -1,13 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      
-      
-    </div>
-  );
+class App extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state= {
+
+    };
+  }
+  
+  render() {
+    return (
+      <div id="drum-machine">
+        
+
+      </div>
+    );
+  }
 }
 
 export default App;
