@@ -31,9 +31,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: 'drums'
+      mode: 'drums',
+      display: 'Lets start'
     };
   }
+
   
   render() {
 
@@ -45,7 +47,7 @@ class App extends React.Component {
     return (
       <div id="drum-machine">
         {pads}
-        <div id="display"></div>
+        <div id="display">{this.state.display}</div>
       </div>
     );
   }
