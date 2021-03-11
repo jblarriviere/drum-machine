@@ -55,7 +55,9 @@ class App extends React.Component {
 
 function Pad(props) {
   return(
-    <button>{props.keyName}</button>
+    <button>{props.keyName}
+      <audio src={"../audio/"+props.id+".mp3"} className="clip" id={props.keyName} />
+    </button>
   );
 }
  
