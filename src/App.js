@@ -13,7 +13,7 @@ class App extends React.Component {
     return (
       <div id="drum-machine">
         
-
+        <div id="display"></div>
       </div>
     );
   }
