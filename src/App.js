@@ -3,15 +3,15 @@ import React from 'react';
 
 const audios = {
   drums: {
-    Q: "Heater 1",
-    W: "Heater 2",
-    E: "Heater 3",
-    A: "Heater 4",
+    Q: "Ride",
+    W: "Shaker",
+    E: "Snare",
+    A: "Tom",
     S: "Clap",
-    D: "Open HH",
-    Z: "Kick n' Hat",
+    D: "OpenHat",
+    Z: "Clave",
     X: "Kick",
-    C: "Closed HH"
+    C: "Closed_HH"
   },
   piano: {
     Q: "Chord 1",
@@ -56,7 +56,7 @@ class App extends React.Component {
 function Pad(props) {
   return(
     <button>{props.keyName}
-      <audio src={"../audio/"+props.id+".mp3"} className="clip" id={props.keyName} />
+      <audio src={"../audio/"+props.id+".wav"} className="clip" id={props.keyName} />
     </button>
   );
 }
