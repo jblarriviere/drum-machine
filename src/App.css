@@ -56,7 +56,6 @@
 /* STYLING THE SWITCHES */
 /* The switch - the box around the slider */
 
-
 .switch {
   position: relative;
   display: inline-block;
@@ -134,13 +133,13 @@ input:checked + .slider:before {
   appearance: none;
   width: 8px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: rgb(42, 44, 44); /* Green background */
+  background: rgb(42, 44, 44); /* Grey background */
   cursor: pointer; /* Cursor on hover */
 }
 
 #volume::-moz-range-thumb {
   width: 8px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: rgb(42, 44, 44); /* Green background */
+  background: rgb(42, 44, 44); /* Grey background */
   cursor: pointer; /* Cursor on hover */
 }
