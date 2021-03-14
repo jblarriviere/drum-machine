@@ -19,7 +19,6 @@
 #padControls {
   width: 350px;
   height: 250px;
-
   padding: 30px;
 
   display: grid;
@@ -39,15 +38,21 @@
 
   font-size: 16px;
   font-weight: 800;
+}
 
-
+.drum-pad:active {
+  background-color: #FFA600;
+  box-shadow: none;
 }
 
 #settingControls {
-  padding: 10px;
+  width: 250px;
+  padding: 30px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+  
   border: 1px solid red;
 }
 
