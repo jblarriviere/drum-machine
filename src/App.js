@@ -55,7 +55,8 @@ class PadControls extends React.Component {
 class Pad extends React.Component {
   render() {
     return(
-      <button>{this.props.keyName}
+      <button className='drum-pad' id={this.props.id}>
+        {this.props.keyName}
         <audio src={"../audio/"+this.props.id+".wav"}
               className="clip"
               id={this.props.keyName} 
