@@ -95,7 +95,7 @@ class Switch extends React.Component {
 class Display extends React.Component {
   render() {
     return(
-      <p>{this.props.text}</p>
+      <p id="display">{this.props.text}</p>
     );
   }
 }
@@ -104,11 +104,11 @@ class VolumeSlide extends React.Component {
   render() {
     return(
       <div id="volumeSlide">
+        <label for="volume">Volume</label>
         <input type="range" 
               id="volume" 
               name="volume"
         />
-        <label for="volume">Volume</label>
       </div>
     );
   }
