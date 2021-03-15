@@ -21,14 +21,51 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: "Affichage"
+      isOn: false,
+      bankSwitch: 'drums',
+      volume: 50,
+      lastAction: ''
     };
   }
+
+  onVolumeUpdate (event) {
+    let text = "Volume : " + event.target.value;
+    this.setState({
+      volume: event.target.value,
+      lastAction: text
+    });
+  }
+
+  onPowerChange(event) {
+    this.setState({
+      isOn: !this.state.isOn,
+      lastAction: this.state.isOn ? 'OFF' : 'ON'
+    });
+  }
+
+  onBankChange(event) {
+    this.setState({
+      bankSwitch: this.state.bankSwitch === 'drums' ? 'piano' : 'drums',
+      lastAction: this.state.bankSwitch === 'drums' ? 'Smooth Piano Kit' : 'Heater Kit'
+    });
+  }
+
   render() {
     return (
       <div id="drum-machine">
-        <PadControls />
-        <SettingControls display={this.state.display}/>
+        <PadControls 
+          isOn={this.state.isOn}
+          volume={this.state.volume}
+          currentBank={this.state.bankSwitch}
+        />
+        <SettingControls 
+          isOn = {this.state.isOn}
+          display={this.state.lastAction}
+          volume={this.state.volume}
+          onVolumeUpdate={this.onVolumeUpdate = this.onVolumeUpdate.bind(this)}
+          onPowerChange={this.onPowerChange = this.onPowerChange.bind(this)}
+          onBankChange= {this.onBankChange = this.onBankChange.bind(this)}
+        />
       </div>
     );
   }
@@ -70,10 +107,20 @@ class SettingControls extends React.Component {
   render() {
     return(
       <div id="settingControls">
-        <Switch name='Power' />
+        <Switch 
+          name='Power'
+          handleChange = {this.props.onPowerChange}
+        />
         <Display text={this.props.display}/>
-        <VolumeSlide />
-        <Switch name='Bank' />
+        <VolumeSlide 
+          onVolumeUpdate={this.props.onVolumeUpdate}
+          volume={this.props.volume}
+          isOn={this.props.isOn}
+        />
+        <Switch 
+          name='Bank' 
+          handleChange = {this.props.onBankChange}
+        />
       </div>
     );
   }
@@ -85,7 +132,7 @@ class Switch extends React.Component {
       <div className="switchContainer">
         <p>{this.props.name}</p>
         <label class="switch">
-          <input type="checkbox" />
+          <input type="checkbox" onChange={this.props.handleChange}/>
           <span class="slider"></span>
         </label>
       </div>
@@ -109,6 +156,9 @@ class VolumeSlide extends React.Component {
         <input type="range" 
               id="volume" 
               name="volume"
+              onChange={this.props.onVolumeUpdate}
+              value={this.props.volume}
+              disabled={this.props.isOn?false:true}
         />
       </div>
     );
