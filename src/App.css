@@ -41,9 +41,14 @@
   font-size: inherit;
 }
 
-.drum-pad:active {
+.drum-pad:enabled:active {
   background-color: #FFA600;
   box-shadow: none;
+}
+
+.drum-pad:focus {
+  outline: none;
+  box-shadow: 3px 3px 5px;
 }
 
 #settingControls {
