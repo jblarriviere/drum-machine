@@ -116,11 +116,9 @@ class App extends React.Component {
     keys.map(element => {
       return (this.refsTable[element] = React.createRef());
     });
-
-
   }
 
-  onVolumeUpdate (event) {
+  handleVolumeUpdate (event) {
     let text = "Volume : " + event.target.value;
     this.setState({
       volume: event.target.value,
@@ -128,14 +126,14 @@ class App extends React.Component {
     });
   }
 
-  onPowerChange(event) {
+  handlePowerChange(event) {
     this.setState( (state, props) => ({
       isOn: !state.isOn,
       lastAction: state.isOn ? 'OFF' : 'ON'
     }));
   }
 
-  onBankChange(event) {
+  handleBankChange(event) {
     this.setState((state, props) => ({
       bankSwitch: state.bankSwitch === 'drums' ? 'piano' : 'drums',
       lastAction: state.bankSwitch === 'drums' ? 'Smooth Piano Kit' : 'Heater Kit'
@@ -144,31 +142,53 @@ class App extends React.Component {
     console.log(this.refsTable);
   }
 
-  onPadClick(event) {
+  handlePadClick(event) {
     this.setState({
       lastAction: event.target.id
     });
-    this.refsTable[event.target.value].current.volume = this.state.volume / 100;
-    this.refsTable[event.target.value].current.play(); 
+    this.playTrack(event.target.value);
+  }
+
+  handleKeyDown(event) {
+    console.log(event.key);
+
+    let track = audios[this.state.bankSwitch].find((track) => track.key === event.key.toUpperCase());
+
+    if(track !== undefined)
+    {
+      this.setState({
+        lastAction: track.id 
+      });
+      this.playTrack(event.key.toUpperCase());
+    }
+  }
+
+  playTrack(key) {
+    this.refsTable[key].current.volume = this.state.volume / 100;
+    this.refsTable[key].current.play(); 
   }
 
   render() {
     return (
       
-      <div id="drum-machine">
+      <div 
+        id="drum-machine"
+        tabIndex="0"
+        onKeyDown={this.handleKeyDown = this.handleKeyDown.bind(this)}
+      >
         <PadControls 
           isOn={this.state.isOn}
           currentBank={this.state.bankSwitch}
-          onPadClick={this.onPadClick = this.onPadClick.bind(this)}
+          handlePadClick={this.handlePadClick = this.handlePadClick.bind(this)}
           refsTable={this.refsTable}
         />
         <SettingControls 
           isOn = {this.state.isOn}
           display={this.state.lastAction}
           volume={this.state.volume}
-          onVolumeUpdate={this.onVolumeUpdate = this.onVolumeUpdate.bind(this)}
-          onPowerChange={this.onPowerChange = this.onPowerChange.bind(this)}
-          onBankChange= {this.onBankChange = this.onBankChange.bind(this)}
+          handleVolumeUpdate={this.handleVolumeUpdate = this.handleVolumeUpdate.bind(this)}
+          handlePowerChange={this.handlePowerChange = this.handlePowerChange.bind(this)}
+          handleBankChange= {this.handleBankChange = this.handleBankChange.bind(this)}
         />
       </div>
     );
@@ -184,7 +204,7 @@ class PadControls extends React.Component {
         key={key}
         keyName={key}
         isOn={this.props.isOn}
-        onPadClick={this.props.onPadClick}
+        handlePadClick={this.props.handlePadClick}
         refToQ={this.props.refToQ}
         currentBank={this.props.currentBank}
         refsTable={this.props.refsTable}
@@ -209,7 +229,7 @@ class Pad extends React.Component {
         className='drum-pad' 
         id={sound.id}
         disabled={!this.props.isOn}
-        onClick={this.props.onPadClick}
+        onClick={this.props.handlePadClick}
         value={this.props.keyName}
       >
         {this.props.keyName}
@@ -230,18 +250,18 @@ class SettingControls extends React.Component {
       <div id="settingControls">
         <Switch 
           name='Power'
-          handleChange = {this.props.onPowerChange}
+          handleChange = {this.props.handlePowerChange}
           isOn={this.props.isOn}
         />
         <Display text={this.props.display}/>
         <VolumeSlide 
-          onVolumeUpdate={this.props.onVolumeUpdate}
+          handleVolumeUpdate={this.props.handleVolumeUpdate}
           volume={this.props.volume}
           isOn={this.props.isOn}
         />
         <Switch 
           name='Bank' 
-          handleChange = {this.props.onBankChange}
+          handleChange = {this.props.handleBankChange}
           isOn= {this.props.isOn}
         />
       </div>
@@ -284,7 +304,7 @@ class VolumeSlide extends React.Component {
         <input type="range" 
               id="volume" 
               name="volume"
-              onChange={this.props.onVolumeUpdate}
+              onChange={this.props.handleVolumeUpdate}
               value={this.props.volume}
               disabled={this.props.isOn?false:true}
         />
