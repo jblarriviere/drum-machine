@@ -154,7 +154,7 @@ class App extends React.Component {
 
     let track = audios[this.state.bankSwitch].find((track) => track.key === event.key.toUpperCase());
 
-    if(track !== undefined)
+    if(track !== undefined && this.state.isOn)
     {
       this.setState({
         lastAction: track.id 
@@ -164,6 +164,7 @@ class App extends React.Component {
   }
 
   playTrack(key) {
+    this.refsTable[key].current.currentTime = 0;
     this.refsTable[key].current.volume = this.state.volume / 100;
     this.refsTable[key].current.play(); 
   }
